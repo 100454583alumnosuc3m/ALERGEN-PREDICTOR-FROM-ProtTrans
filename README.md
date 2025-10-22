@@ -1,69 +1,75 @@
-# Lector y Predictor de Proteínas 🧬
 
-Este script de Python permite predecir la clase de una proteína (alérgeno o no alérgeno) utilizando un modelo SVM previamente entrenado. La entrada del script son los embeddings de las proteínas en formato HDF5 (`.h5`).
+# Protein Reader and Predictor 🧬
 
------
+This Python script predicts the class of a protein (allergen or non-allergen) using a previously trained SVM model. The input for the script is a protein embedding generated with ProtTrans (Elnaggar et al, 2022; https://pubmed.ncbi.nlm.nih.gov/34232869/) in HDF5 (.h5) format. You can use pre-generated ProtTrans embeddings available at resources such as UniProt (https://www.uniprot.org/help/embeddings) or genereate yours installing that package (https://github.com/agemagician/ProtTrans). In the last case, use the "--per_protein 1" option to generate embeddings at the whole-protein level.
 
-## ⚙️ Requisitos
 
-Asegúrate de tener las siguientes librerías instaladas en tu entorno de Python. Puedes instalarlas con `pip`:
+---
+
+## ⚙️ Requirements
+
+Make sure you have the following libraries installed in your Python environment. You can install them with `pip`:
 
 ```bash
 pip install numpy pandas joblib h5py scikit-learn
 ```
 
------
+---
 
-## 🚀 Uso
+## 🚀 Usage
 
-Para ejecutar el script, usa el siguiente comando en la terminal:
-
-```bash
-python PREDICTOR_PROTEINAS_H5.py <ruta_del_modelo.plk> <ruta_del_embedding.h5>
-```
-
-  - `<ruta_del_modelo.plk>`: La ruta al archivo del modelo SVM entrenado. Este archivo debe ser un objeto serializado con `joblib`.
-  - `<ruta_del_embedding.h5>`: La ruta al archivo HDF5 (`.h5`) que contiene los embeddings de las proteínas a predecir.
-
-### **Ejemplo**
-
-Si tu modelo se llama `pesos_modelo.plk` y tus embeddings están en `dataset.h5`, el comando sería:
+To run the script, use the following command in your terminal:
 
 ```bash
-python PREDICTOR_PROTEINAS_H5.py pesos_modelo.plk dataset.h5
+python PREDICTOR_PROTEINAS_H5.py <model_path.plk> <embedding_path.h5>
 ```
 
------
+* `<model_path.plk>`: The path to the trained SVM model file. This file must be a serialized object created with `joblib`.
+* `<embedding_path.h5>`: The path to the HDF5 (`.h5`) file containing the protein embeddings to be predicted.
 
-## 📝 Formato de los Archivos
+### **Example**
 
-### **Modelo SVM (`.plk`)**
+If your model is named `model_weights.plk` and your embeddings are in `dataset.h5`, the command would be:
 
-El script espera un modelo de clasificación binaria de `scikit-learn` serializado con `joblib`. Este modelo debe haber sido entrenado previamente en un conjunto de datos similar.
+```bash
+python PREDICTOR_PROTEINAS_H5.py model_weights.plk dataset.h5
+```
 
-### **Archivo de Embeddings (`.h5`)**
+---
 
-El script está diseñado para leer un archivo HDF5 donde cada "dataset" dentro del archivo representa una proteína. El **nombre del dataset** se usa como el identificador de la proteína y el **contenido del dataset** es su vector de embedding (un array de NumPy).
+## 📝 File Formats
 
-**Ejemplo de estructura de archivo `.h5`:**
+### **SVM Model (`.plk`)**
+
+The script expects a binary classification model from `scikit-learn` serialized with `joblib`. This model should have been previously trained on a similar dataset.
+
+### **Embeddings File (`.h5`)**
+
+The script is designed to read an HDF5 file where each "dataset" within the file represents a protein. The **dataset name** is used as the protein identifier, and the **dataset content** is its embedding vector (a NumPy array).
+
+**Example structure of an `.h5` file:**
 
 ```
 /
-  - Dataset: 'NombreProteina1', Shape: (1024,), Dtype: float32
-  - Dataset: 'NombreProteina2', Shape: (1024,), Dtype: float32
-  - Dataset: 'NombreProteina3', Shape: (1024,), Dtype: float32
+  - Dataset: 'ProteinName1', Shape: (1024,), Dtype: float32
+  - Dataset: 'ProteinName2', Shape: (1024,), Dtype: float32
+  - Dataset: 'ProteinName3', Shape: (1024,), Dtype: float32
   ...
 ```
 
------
+---
 
-## 📊 Salida
+## 📊 Output
 
-La salida del script se imprime directamente en la terminal, mostrando los resultados de la predicción para cada proteína en el archivo de entrada. Por cada proteína, verás la siguiente información:
+The script prints its output directly to the terminal, showing the prediction results for each protein in the input file. For each protein, you’ll see the following information:
 
-  - **Nombre**: El identificador de la proteína.
-  - **Predicción**: `1` si es un alérgeno, `0` si no lo es.
-  - **Clase**: Descripción en texto de la predicción.
-  - **Distancia al *boundary***: La distancia de la muestra al hiperplano de decisión del SVM. Un valor positivo indica la clase `1` y un valor negativo la clase `0`. Cuanto mayor sea el valor absoluto, mayor es la confianza del modelo.
-  - **Probabilidad de No Alérgeno**: La probabilidad de que la proteína pertenezca a la clase `0`.
-  - **Probabilidad de Alérgeno**: La probabilidad de que la proteína pertenezca a la clase `1`.
+* **Name**: The protein identifier.
+* **Prediction**: `1` if it is an allergen, `0` if it is not.
+* **Class**: Text description of the prediction.
+* **Distance to the Boundary**: The distance of the sample to the SVM decision hyperplane. A positive value indicates class `1`, and a negative value indicates class `0`. The larger the absolute value, the greater the model’s confidence.
+* **Non-Allergen Probability**: The probability that the protein belongs to class `0`.
+* **Allergen Probability**: The probability that the protein belongs to class `1`.
+
+---
+
+Would you like me to also make the English version stylistically consistent with typical GitHub READMEs (e.g., title capitalization, slightly improved flow)?
