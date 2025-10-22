@@ -70,6 +70,5 @@ The script prints its output directly to the terminal, showing the prediction re
 * **Non-Allergen Probability**: The probability that the protein belongs to class `0`.
 * **Allergen Probability**: The probability that the protein belongs to class `1`.
 
----
 
-Would you like me to also make the English version stylistically consistent with typical GitHub READMEs (e.g., title capitalization, slightly improved flow)?
+
