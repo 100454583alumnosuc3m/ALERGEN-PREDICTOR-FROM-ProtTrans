@@ -1,7 +1,9 @@
 
-# Protein Reader and Predictor 🧬
+# Plant food protein allergenicity predictor. 🧬
 
-This Python script predicts the class of a protein (allergen or non-allergen) using a previously trained SVM model. The input for the script is a protein embedding generated with ProtTrans (Elnaggar et al, 2022; https://pubmed.ncbi.nlm.nih.gov/34232869/) in HDF5 (.h5) format. You can use pre-generated ProtTrans embeddings available at resources such as UniProt (https://www.uniprot.org/help/embeddings) or genereate yours installing that package (https://github.com/agemagician/ProtTrans). In the last case, use the "--per_protein 1" option to generate embeddings at the whole-protein level.
+This Python script predicts the allergenicity of a plant protein using a SVM model trained to distinguish plant proteins that are allergens from those that are not. Although focused on plant proteins, the performance of the model in other types of allergens is also good (manuscript submitted)
+
+The input for the script is a protein embedding generated with ProtTrans (Elnaggar et al, 2022; https://pubmed.ncbi.nlm.nih.gov/34232869/) in HDF5 (.h5) format. You can use pre-generated ProtTrans embeddings available at resources such as UniProt (https://www.uniprot.org/help/embeddings) or genereate yours installing that package (https://github.com/agemagician/ProtTrans). In the last case, use the "--per_protein 1" option to generate embeddings at the whole-protein level.
 
 
 ---
